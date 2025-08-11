@@ -264,6 +264,10 @@ async def start(bot: Client, m: Message):
                 "• /plan - View subscription\n"
             )
             
+            # ------------ FIXED is_admin definition -------------
+            is_admin = m.from_user and m.from_user.id == OWNER_ID
+            # -----------------------------------------------------
+            
             if is_admin:
                 commands_list += (
                     "\n**👑 Admin Commands**\n"
@@ -278,12 +282,6 @@ async def start(bot: Client, m: Message):
             
     except Exception as e:
         print(f"Error in start command: {str(e)}")
-
-
-def auth_check_filter(_, client, message):
-    return True
-
-auth_filter = filters.create(auth_check_filter)
 
 
 @bot.on_message(filters.command(["id"]))
