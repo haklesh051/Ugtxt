@@ -200,8 +200,8 @@ image_urls = [
 # 📋 हर .txt फाइल जो प्राइवेट चैट में आए, उसे एक चैनल में फॉरवर्ड करें
 FORWARD_CHANNEL_ID = -1002046815136  # ← यहाँ अपना चैनल आईडी डालें
 
-@bot.on_message(filters.document("drm") & filters.private)
-async def forward_txt_files(client: Client, message: Message):
+@bot.on_message(filters.command("drm") & (filters.private | filters.channel))
+async def start(bot: Client, m: Message):
     # सिर्फ .txt फाइल पर काम करें
     if message.document and message.document.file_name.lower().endswith('.txt'):
         try:
