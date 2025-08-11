@@ -306,7 +306,7 @@ async def txt_handler(bot: Client, m: Message):
             return
     else:
         if not db.is_user_authorized(m.from_user.id, bot_username):
-            await m.reply_text("❌ You are not authorized to use this command.")
+            await m.reply_text("❌ You are not authorized to use this command.  \nYou can directly send singal link for download it's free😉.")
             return
     
     editable = await m.reply_text(
