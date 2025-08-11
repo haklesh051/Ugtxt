@@ -293,7 +293,7 @@ async def id_command(client, message: Message):
 
 
 
-@bot.on_message(filters.command(["drm"]) & auth_filter)
+@bot.on_message(filters.command(["drm"]))
 async def txt_handler(bot: Client, m: Message):  
     # Get bot username
     bot_info = await bot.get_me()
